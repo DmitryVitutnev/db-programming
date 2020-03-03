@@ -1,34 +1,32 @@
 use internet_market;
 
+delete from product_has_category where product_id != 0;
 delete from product where id != 0;
 delete from seller where id != 0;
 delete from category where id != 0;
 delete from byer where id != 0;
 delete from trade where id != 0;
 delete from product_in_trade where id != 0;
-delete from product_has_category where product_id != 0;
 
-insert into seller values(null, "Дмитрий");
-SET @dimaID := LAST_INSERT_ID();
-insert into product values(null, "ноутбук", 100, 3000000, @dimaID);
-insert into product values(null, "телевизор", 200, 2000000, @dimaID);
-insert into product values(null, "диван", 50, 1000000, @dimaID);
-insert into product values(null, "подушка", 9999, 10000, @dimaID);
 
-insert into seller values(null, "Владимир");
-SET @vovaID := LAST_INSERT_ID();
-insert into product values(null, "холодильник", 10, 3000000, @vovaID);
-insert into product values(null, "печь", 1, 2000000, @vovaID);
+insert into seller values(1, "Дмитрий");
+insert into product values(1, "ноутбук", 100, 3000000, 1);
+insert into product values(2, "телевизор", 200, 2000000, 1);
+insert into product values(3, "диван", 50, 1000000, 1);
+insert into product values(4, "подушка", 9999, 10000, 1);
 
-insert into seller values(null, "Константин");
-SET @kostyaID := LAST_INSERT_ID();
-insert into product values(null, "умные часы", 10, 3000000, @kostyaID);
-insert into product values(null, "пылесос", 0, 1000000, @kostyaID);
+insert into seller values(2, "Владимир");
+insert into product values(5, "холодильник", 10, 3000000, 2);
+insert into product values(6, "печь", 1, 2000000, 2);
 
-insert into category values(null, "для дома");
-insert into category values(null, "техника");
+insert into seller values(3, "Константин");
+insert into product values(7, "умные часы", 10, 3000000, 3);
+insert into product values(8, "пылесос", 0, 1000000, 3);
 
-insert into product_has_category values((select id from product where `name` = "диван"), (select id from category where `name` = "для дома"));
-insert into product_has_category values((select id from product where `name` = "холодильник"), (select id from category where `name` = "для дома"));
-insert into product_has_category values((select id from product where `name` = "холодильник"), (select id from category where `name` = "техника"));
-insert into product_has_category values((select id from product where `name` = "умные часы"), (select id from category where `name` = "техника"));
+insert into category values(1, "для дома");
+insert into category values(2, "техника");
+
+insert into product_has_category values(3, 1);
+insert into product_has_category values(5, 1);
+insert into product_has_category values(5, 2);
+insert into product_has_category values(7, 2);

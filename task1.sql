@@ -6,11 +6,11 @@ select name,
 	case
     when amount = 0
     then "нет в наличии"
-    else cast(amount as char(20))
+    else amount
     end amount
 from product;
 
-select count(id) as "количество продавцов" from seller;
+select *, (price * amount) as "total price" from product;
 
 select * from product where amount between 10 and 200;
 select * from product where id is not null;
