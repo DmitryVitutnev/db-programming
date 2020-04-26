@@ -30,3 +30,7 @@ insert into product_has_category values(3, 1);
 insert into product_has_category values(5, 1);
 insert into product_has_category values(5, 2);
 insert into product_has_category values(7, 2);
+
+insert into byer values(1, "Дмитрий");
+insert into byer values(2, "Виктория");
+insert into byer values(3, "Анна");
