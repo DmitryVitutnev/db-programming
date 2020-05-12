@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS `internet_market`.`byer` ;
 CREATE TABLE IF NOT EXISTS `internet_market`.`byer` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `money` INT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;

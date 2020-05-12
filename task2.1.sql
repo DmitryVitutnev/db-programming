@@ -36,12 +36,21 @@ select product.`name`, category.`name` from product
 select product.`name`, category.`name` from product 
 	left outer join product_has_category on product.id=product_has_category.product_id
     left outer join category on product_has_category.category_id=category.id;
+    
+-- RIGHT    
+select product.`name`, category.`name` from product 
+	right outer join product_has_category on product.id=product_has_category.product_id
+    right outer join category on product_has_category.category_id=category.id;
 
 -- Декатрово произведение
 select * from byer, seller;
 select * from byer cross join seller;
 
--- Удаление дубликатов. Из-за ограничений SQL пришлось хитрить
+-- Тета-соединение
+select byer.`name`, product.`name`, seller_id from byer
+	inner join product on byer.money >= product.price;
+
+-- Удаление дубликатов имён. Из-за тонкостей MySQL пришлось хитрить
 insert into seller values(4, "Дмитрий");
 select * from seller;
 delete from seller where id <> 0 and id not in (
