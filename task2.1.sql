@@ -24,6 +24,12 @@ where not exists (
 -- Естественное соединение
 select * from seller natural join byer;
 
+-- Композиция
+select product.name as `продукт`, amount as `количество`, price as `цена`, seller.name as `продавец`, category.name as `патегория` from product
+	join product_has_category on product.id = product_id
+    join category on category_id = category.id
+    join seller on seller_id = seller.id;
+
 -- Эквисоединение
 select * from seller join product on seller.id = product.seller_id;
 

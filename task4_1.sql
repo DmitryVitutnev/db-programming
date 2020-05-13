@@ -1,3 +1,8 @@
+-- Используя таблицу с полями дата/соперник/результат, найти самую
+-- долгую серию побед, поражений и ничьих команды в сезоне. Поле
+-- результат принимает следующие значения: 1 – победа, 0 – ничья, -1 –
+-- поражение.
+
 CREATE SCHEMA IF NOT EXISTS `task4_1` DEFAULT CHARACTER SET utf8 ;
 USE `task4_1` ;
 
@@ -20,6 +25,7 @@ INSERT INTO `table` VALUES (NULL, "s", -1);
 INSERT INTO `table` VALUES (NULL, "s", -1);
 
 
+-- Процедура в качестве параметров принимает переменные, в которые будет записан результат.
 DROP PROCEDURE IF EXISTS task4_1;
 delimiter $$
 CREATE PROCEDURE task4_1 (OUT winStreak INT, OUT drawStreak INT, OUT loseStreak INT)

@@ -1,3 +1,8 @@
+-- Сгенерируйте в соответствии с равномерным распределением (по a и по
+-- b) выборку {a,b}. Рассматривая b как функцию от a, проверить эту
+-- функцию на монотонность. Рассчитайте для этой выборки (для a и для b)
+-- медиану, среднее и среднеквадратичное отклонение.
+
 CREATE SCHEMA IF NOT EXISTS `task4_6` DEFAULT CHARACTER SET utf8 ;
 USE `task4_6` ;
 
@@ -12,10 +17,10 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
-
-DROP PROCEDURE IF EXISTS fillTables;
+-- Заполнение таблицы
+DROP PROCEDURE IF EXISTS fillTable;
 delimiter $$
-CREATE PROCEDURE fillTables (IN rowNumber INT)
+CREATE PROCEDURE fillTable (IN rowNumber INT)
 BEGIN
     DECLARE counter INT DEFAULT 0;
     fillFirst: LOOP
@@ -29,7 +34,7 @@ BEGIN
 END;
 
 $$
-
+-- Проверка на монотонность
 DROP FUNCTION IF EXISTS isMonotonous; $$
 CREATE FUNCTION isMonotonous ()
 RETURNS BOOL 
@@ -73,6 +78,7 @@ END;
 
 $$
 
+-- Вычисление статистик
 DROP PROCEDURE IF EXISTS showStatAB; $$
 CREATE PROCEDURE showStatAB () 
 BEGIN
@@ -100,5 +106,5 @@ BEGIN
     
 END;
 $$
-CALL fillTables(3); $$
+CALL fillTable(3); $$
 CALL showStatAB(); $$

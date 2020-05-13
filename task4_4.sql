@@ -1,3 +1,10 @@
+-- Сгенерируйте в соответствии с равномерным распределением значения a
+-- и поместите их в таблицу с полями id/a, где a – натуральное число.
+-- Постройте по этой выборке выборку с полями id/a', где a'=min a, если a
+-- больше среднего значения по столбцу, и a'=max a иначе. Рассчитайте и
+-- сравните для исходной и полученной выборок медиану, среднее и
+-- среднеквадратичное отклонение.
+
 CREATE SCHEMA IF NOT EXISTS `task4_4` DEFAULT CHARACTER SET utf8 ;
 USE `task4_4` ;
 
@@ -30,6 +37,8 @@ INSERT INTO `table1` VALUES (NULL, FLOOR(RAND() * 10));
 INSERT INTO `table1` VALUES (NULL, FLOOR(RAND() * 10));
 INSERT INTO `table1` VALUES (NULL, FLOOR(RAND() * 10));
 
+
+-- Заполнение второй таблицы
 DROP PROCEDURE IF EXISTS minMax;
 delimiter $$
 CREATE PROCEDURE minMax ()
@@ -37,8 +46,8 @@ BEGIN
     DECLARE done INT DEFAULT 0;
     DECLARE curId INT DEFAULT 0;
     DECLARE curA INT DEFAULT 0;
-    DECLARE minA INT DEFAULT 100;
-    DECLARE maxA INT DEFAULT -100;
+    DECLARE minA INT DEFAULT 1000;
+    DECLARE maxA INT DEFAULT -1000;
     
     DECLARE average REAL DEFAULT 0;
     DECLARE row_num INT DEFAULT 0;
@@ -95,6 +104,7 @@ END;
 
 $$
 
+-- Вычисление статистик
 DROP PROCEDURE IF EXISTS showStat; $$
 CREATE PROCEDURE showStat () 
 BEGIN

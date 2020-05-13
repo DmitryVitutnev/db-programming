@@ -1,3 +1,10 @@
+-- Сгенерируйте в соответствии с равномерным распределением значения a
+-- (a – натуральное число) и поместите их в таблицу с полями id/a/b,
+-- b=0.01a. Постройте по этой выборке выборку с полями id/a'/b', где a'=a,
+-- b=a^2. Рассчитайте и сравните для исходной и полученной выборок
+-- медиану, среднее и среднеквадратичное отклонение.
+
+
 CREATE SCHEMA IF NOT EXISTS `task4_5` DEFAULT CHARACTER SET utf8 ;
 USE `task4_5` ;
 
@@ -21,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `task4_5`.`table2` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-
+-- Построение таблиц
 DROP PROCEDURE IF EXISTS fillTables;
 delimiter $$
 CREATE PROCEDURE fillTables (IN rowNumber INT)
@@ -62,6 +69,7 @@ END;
 
 $$
 
+-- Вычисление статистик
 DROP PROCEDURE IF EXISTS showStatAB; $$
 CREATE PROCEDURE showStatAB () 
 BEGIN
