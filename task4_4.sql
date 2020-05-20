@@ -114,16 +114,26 @@ BEGIN
 	DECLARE avg2 REAL DEFAULT 0;
 	DECLARE median2 REAL DEFAULT 0;
 	DECLARE std2 REAL DEFAULT 0;
-    DECLARE medianRow INT DEFAULT 0;
+    DECLARE rowCount INT DEFAULT 0;
+    DECLARE medianRowLow INT DEFAULT 0;
+    DECLARE medianRowHigh INT DEFAULT 0;
     
-    SET medianRow = FLOOR((SELECT COUNT(*) FROM table1) / 2);
+    SET rowCount = (SELECT COUNT(*) FROM table1);
+    SET medianRowLow = FLOOR((rowCount-1) / 2);
+    SET medianRowHigh = CEIL((rowCount-1) / 2);
     
     SET avg1 = (SELECT AVG(a) from table1);
     SET std1 = (SELECT STD(a) from table1);
     SET avg2 = (SELECT AVG(a) from table2);
     SET std2 = (SELECT STD(a) from table2);
-    SET median1 = (SELECT a FROM table1 ORDER BY a ASC LIMIT medianRow,1);
-    SET median2 = (SELECT a FROM table2 ORDER BY a ASC LIMIT medianRow,1);
+    
+    
+	SET median1 = (SELECT a FROM table1 ORDER BY a ASC LIMIT medianRowLow,1);
+    SET median1 = median1 + (SELECT a FROM table1 ORDER BY a ASC LIMIT medianRowHigh,1);
+    SET median1 = median1 / 2;
+	SET median2 = (SELECT a FROM table2 ORDER BY a ASC LIMIT medianRowLow,1);
+    SET median2 = median2 + (SELECT a FROM table2 ORDER BY a ASC LIMIT medianRowHigh,1);
+	SET median2 = median2 / 2; 
     
     SELECT avg1, avg2, std1, std2, median1, median2;
     

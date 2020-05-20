@@ -90,21 +90,29 @@ BEGIN
 	DECLARE median1B REAL DEFAULT 0;
 	DECLARE std1B REAL DEFAULT 0;
     
-    DECLARE medianRow INT DEFAULT 0;
+    DECLARE rowCount INT DEFAULT 0;
+    DECLARE medianRowLow INT DEFAULT 0;
+    DECLARE medianRowHigh INT DEFAULT 0;
     
-    SET medianRow = FLOOR((SELECT COUNT(*) FROM table1) / 2);
+    SET rowCount = (SELECT COUNT(*) FROM table1);
+    SET medianRowLow = FLOOR((rowCount-1) / 2);
+    SET medianRowHigh = CEIL((rowCount-1) / 2);
     
     SET avg1A = (SELECT AVG(a) from table1);
     SET std1A = (SELECT STD(a) from table1);
-    SET median1A = (SELECT a FROM table1 ORDER BY a ASC LIMIT medianRow,1);
+    SET median1A = (SELECT a FROM table1 ORDER BY a ASC LIMIT medianRowLow,1);
+    SET median1A = median1A + (SELECT a FROM table1 ORDER BY a ASC LIMIT medianRowHigh,1);
+    SET median1A = median1A / 2;
     
     SET avg1B = (SELECT AVG(b) from table1);
     SET std1B = (SELECT STD(b) from table1);
-    SET median1B = (SELECT b FROM table1 ORDER BY a ASC LIMIT medianRow,1);
+    SET median1B = (SELECT b FROM table1 ORDER BY b ASC LIMIT medianRowLow,1);
+    SET median1B = median1B + (SELECT b FROM table1 ORDER BY b ASC LIMIT medianRowHigh,1);
+    SET median1B = median1B / 2;
     
     SELECT isMonotonous(), avg1A, std1A, median1A, avg1B, std1B, median1B;
     
 END;
 $$
-CALL fillTable(3); $$
+CALL fillTable(4); $$
 CALL showStatAB(); $$

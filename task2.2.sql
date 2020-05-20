@@ -1,5 +1,7 @@
 use task2_2;
 
+-- Сначала нужно выполнить task2.2_init
+
 -- команды, которые тренировал более чем один тренер
 select distinct t1.team from team_trainer as t1 inner join team_trainer as t2 
 on t1.team = t2.team and t1.trainer <> t2.trainer;
@@ -34,12 +36,10 @@ where not exists (
     where t2.team = @team and t1.trainer = t2.trainer);
 
 -- тренеров, для которых среднее количество очков команд, которые они тренировали, больше среднего значения по всем тренерам из таблицы
-SET @avg = (SELECT AVG(score) FROM team_trainer_place_score);
-
 select trainer from (
 	select trainer, avg(score) as avg_score from team_trainer_place_score
 	group by trainer) as temp
-where temp.avg_score > @avg;
+where temp.avg_score > (SELECT AVG(score) FROM team_trainer_place_score);
 
 -- команды, становившиеся чемпионами с разными тренерами
 select distinct t1.team from team_trainer_place_score as t1
